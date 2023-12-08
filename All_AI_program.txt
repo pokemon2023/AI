@@ -1,0 +1,593 @@
+# 1. a) Program to print multiplication table for given no.
+->
+num = int(input("Enter a number: "))
+for i in range(1, 11):
+    print(f"{num} x {i} = {num * i}")
+
+O/P->
+Enter a number: 2
+2 x 1 = 2
+2 x 2 = 4
+2 x 3 = 6
+2 x 4 = 8
+2 x 5 = 10
+2 x 6 = 12
+2 x 7 = 14
+2 x 8 = 16
+2 x 9 = 18
+2 x 10 = 20
+
+*****
+# 1. b) Program to check whether the given no is prime or not.
+->
+num = int(input("Enter a number: "))
+if num > 1:
+    for i in range(2, int(num**0.5) + 1):
+        if (num % i) == 0:
+            print(f"{num} is not a prime number")
+            break
+    else:
+        print(f"{num} is a prime number")
+else:
+    print(f"{num} is not a prime number")
+
+O/P->
+Enter a number: 3
+3 is a prime number
+
+****
+# 1. c) Program to find factorial of the given no and similar programs.
+->
+num = int(input("Enter a number: "))
+factorial = 1
+if num < 0:
+    print("Factorial is not defined for negative numbers.")
+elif num == 0:
+    print("The factorial of 0 is 1")
+else:
+    for i in range(1, num + 1):
+        factorial *= i
+    print(f"The factorial of {num} is {factorial}")
+
+O/P->
+Enter a number: 5
+The factorial of 5 is 120
+**********************************************************************************
+#2. Write a program to implement
+#List Operations
+#Nested list, Length, Concatenation, Membership ,Iteration ,Indexing and Slicing
+#List Methods
+#Add, Extend & Delete
+# List Operations
+->
+
+# Creating a nested list
+nested_list = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+
+# Finding the length of the list
+length = len(nested_list)
+
+# Concatenating two lists
+list1 = [1, 2, 3]
+list2 = [4, 5, 6]
+concatenated_list = list1 + list2
+
+# Checking for membership in a list
+item_to_check = 3
+is_member = item_to_check in list1
+
+# Iterating through a list
+for item in list1:
+    print(item)
+
+# Indexing and Slicing
+my_list = [10, 20, 30, 40, 50]
+print("Element at index 2:", my_list[2])
+print("Slicing from index 1 to 3:", my_list[1:4])
+
+# List Methods
+
+# Adding an item to a list
+my_list.append(60)
+
+# Extending a list with another list
+extension_list = [70, 80]
+my_list.extend(extension_list)
+
+# Deleting an item from a list
+item_to_delete = 30
+my_list.remove(item_to_delete)
+
+# Displaying the updated list
+print("Updated List:", my_list)
+
+O/P->
+1
+2
+3
+Element at index 2: 30
+Slicing from index 1 to 3: [20, 30, 40]
+Updated List: [10, 20, 40, 50, 60, 70, 80]
+*******************************************************************************************************
+# 3. Write a program to Illustrate Different Set Operations.
+->
+# Create two sets
+x = {1, 2, 3, 4, 5}
+y = {3, 4, 5, 6, 7}
+
+# Union of two sets
+a = x.union(y)
+print("Union:", a)
+
+# Intersection of two sets
+b = x.intersection(y)
+print("Intersection:", b)
+
+# Difference between two sets (elements in set1 but not in set2)
+c = x.difference(y)
+print("Difference (set1 - set2):", c)
+
+# Symmetric Difference (elements in either set1 or set2, but not in both)
+d = x.symmetric_difference(y)
+print("Symmetric Difference:", d)
+
+# Check if one set is a subset of another
+e = x.issubset(y)
+print("Is set1 a subset of set2:", e)
+
+# Check if one set is a superset of another
+f = x.issuperset(y)
+print("Is set1 a superset of set2:", f)
+
+# Add an element to a set
+x.add(6)
+print("After adding 6 to set1:", x)
+
+# Remove an element from a set
+y.remove(7)
+print("After removing 7 from set2:", y)
+
+O/P->
+Union: {1, 2, 3, 4, 5, 6, 7}
+Intersection: {3, 4, 5}
+Difference (set1 - set2): {1, 2}
+Symmetric Difference: {1, 2, 6, 7}
+Is set1 a subset of set2: False
+Is set1 a superset of set2: False
+After adding 6 to set1: {1, 2, 3, 4, 5, 6}
+After removing 7 from set2: {3, 4, 5, 6}
+******************************************************************************************************
+# 4. Write a program to implement Simple Chatbot.
+->
+# Define a dictionary of responses
+responses = {
+    "hello": "Hello! How can I help you?",
+    "how are you": "I'm just a computer program, but I'm doing well. How about you?",
+    "what's your name": "I'm a chatbot, so I don't have a name. You can call me ChatGPT!",
+    "bye": "Goodbye! Have a great day.",
+    "default": "I'm sorry, I don't understand. Can you please rephrase your question?"
+}
+
+# Main chatbot loop
+while True:
+    user_input = input("You: ").lower()
+    response = responses.get(user_input, responses["default"])
+    print("ChatGPT:", response)
+    if user_input == "bye":
+        break
+
+O/P->
+You: hello
+ChatGPT: Hello! How can I help you?
+You: bye
+ChatGPT: Goodbye! Have a great day.
+*************************************************************************************
+#5 .Write a program to implement Breadth First Search Traversal
+->
+graph = {
+    'A': ['B', 'C', "D"],
+    'B': ['E', "F"],
+    'C': ['G', "I"],
+    'D': ["I"],
+    'E': [],
+    "F": [],
+    'G': [],
+    "I": []
+}
+ 
+def bfs(visit_complete, graph, current_node):
+    visit_complete.append(current_node)
+    queue = []
+    queue.append(current_node)
+ 
+    while queue:
+        s = queue.pop(0)
+        print(s)
+ 
+        for neighbour in graph[s]:
+            if neighbour not in visit_complete:
+                visit_complete.append(neighbour)
+                queue.append(neighbour)
+ 
+bfs([], graph, 'A')
+
+O/P->
+A
+B
+C
+D
+E
+F
+G
+I
+**********************************************************************************************
+#6 .Write a program to implement Depth First Search Traversal.
+->
+# Define a graph as an adjacency list
+graph = {
+    'A': ['B', 'C', "D"],
+    'B': ['E', "F"],
+    'C': ['G', "I"],
+    'D': ["I"],
+    'E': [],
+    "F": [],
+    'G': [],
+    "I": []
+}
+
+def dfs(graph, node, visited):
+    if node not in visited:
+        print(node, end=' ')
+        visited.add(node)
+        for neighbor in graph[node]:
+            dfs(graph, neighbor, visited)
+
+def depth_first_search(graph, start_node):
+    visited = set()
+    dfs(graph, start_node, visited)
+
+# Perform DFS traversal starting from node 'A'
+start_node = 'A'
+print("DFS Traversal starting from node", start_node)
+depth_first_search(graph, start_node)
+
+O/P->
+DFS Traversal starting from node A
+A B E F C G I D 
+*************************************************************************************************************
+#7 .Write a program to implement Water Jug Problem
+->
+def water_jug(jug1_capacity,jug2_capacity,target_amount):
+    jug1 = 0
+    jug2 = 0
+    
+    while (jug1 != target_amount and jug2 != target_amount):
+        
+        pour_amt = min(jug2,jug1_cap-jug1)
+        jug1 += pour_amt
+        jug2 -= pour_amt
+        
+        if(jug1 == jug1_cap):
+            jug1 =0
+        
+        if(jug2 == 0):
+            jug2 = jug2_cap
+            
+        print(f'jug1: {jug1}/{jug1_cap},jug2: {jug2}/{jug2_cap}')
+    
+jug1_cap= int(input('Enter jug1 capacity'))
+jug2_cap= int(input('Enter jug2 capacity'))
+target_amount= int(input('Enter target amount'))
+
+water_jug(jug1_cap,jug2_cap,target_amount)
+
+O/P->
+Enter jug1 capacity4
+Enter jug2 capacity3
+Enter target amount2
+jug1: 0/4,jug2: 3/3
+jug1: 3/4,jug2: 3/3
+jug1: 0/4,jug2: 2/3
+*********************************************************************************************
+#11 .Develop a program to solve the eight queens problem. (Uninformed Search)
+->
+def is_safe(board, row, col):
+    # Check the left side of the current row
+    for i in range(col):
+        if board[row][i] == 1:
+            return False
+
+    # Check upper diagonal on the left side
+    for i, j in zip(range(row, -1, -1), range(col, -1, -1)):
+        if board[i][j] == 1:
+            return False
+
+    # Check lower diagonal on the left side
+    for i, j in zip(range(row, len(board), 1), range(col, -1, -1)):
+        if board[i][j] == 1:
+            return False
+
+    return True
+
+def solve_eight_queens(board, col):
+    if col >= len(board):
+        return True
+
+    for i in range(len(board)):
+        if is_safe(board, i, col):
+            board[i][col] = 1
+            if solve_eight_queens(board, col + 1):
+                return True
+            board[i][col] = 0
+
+    return False
+
+def print_board(board):
+    for row in board:
+        print(" ".join(["Q" if cell == 1 else "." for cell in row]))
+
+def eight_queens():
+    board = [[0 for _ in range(8)] for _ in range(8)]
+    if not solve_eight_queens(board, 0):
+        print("No solution exists.")
+    else:
+        print_board(board)
+
+if __name__ == "__main__":
+    eight_queens()
+
+O/P->
+Q . . . . . . .
+. . . . . . Q .
+. . . . Q . . .
+. . . . . . . Q
+. Q . . . . . .
+. . . Q . . . .
+. . . . . Q . .
+. . Q . . . . .
+******************************************************************************************
+#12. Implement a system that performs arrangement of some set of objects in a room.Assume that you have only 5 rectangular, 4 square-shaped objects. Use A* approachfor the placement of the objects in room for efficient space utilisation. Assumesuitable heuristic, and dimensions of objects and rooms. (Informed Search)
+->
+
+
+
+
+
+
+
+
+
+
+
+
+
+*********************************************************************************************
+# 13 .Implement a program for learning agent for a lift, where
+->
+class Elevator:
+    def __init__(self, num_floors):
+        self.num_floors = num_floors
+        self.current_floor = 1
+        self.stops = set()
+
+    def request_stop(self, floor):
+        self.stops.add(floor)
+
+    def go_to_floor(self, floor):
+        if floor < 1 or floor > self.num_floors:
+            print(f"Invalid floor request: {floor}")
+        else:
+            self.current_floor = floor
+            print(f"Elevator is now on floor {self.current_floor}")
+
+    def process_stops(self):
+        for stop in sorted(self.stops):
+            self.go_to_floor(stop)
+            print(f"Stopping at floor {stop}")
+        self.stops.clear()
+
+# Main function to simulate elevator operation
+def main():
+    num_floors = 10
+    elevator = Elevator(num_floors)
+
+    print("Elevator Learning Agent:")
+    while True:
+        request = input("Enter the floor number or 'q' to quit: ")
+        if request == 'q':
+            break
+        try:
+            floor = int(request)
+            elevator.request_stop(floor)
+        except ValueError:
+            print("Invalid input. Please enter a valid floor number.")
+
+    elevator.process_stops()
+
+if __name__ == '__main__':
+    main()
+
+O/P->
+Elevator Learning Agent:
+Enter the floor number or 'q' to quit: 1
+Enter the floor number or 'q' to quit: 5
+Enter the floor number or 'q' to quit: 3
+Enter the floor number or 'q' to quit: q
+Elevator is now on floor 1
+Stopping at floor 1
+Elevator is now on floor 3
+Stopping at floor 3
+Elevator is now on floor 5
+Stopping at floor 5
+************************************************************************************************
+#14 .Develop a program to solve the N queens puzzle using forward checking. Show insteps how the constraints are handled. (Constraint Satisfaction Problem)
+->
+# Function to print the chessboard with queens
+def print_chessboard(chessboard):
+    for row in chessboard:
+        print(" ".join(row))
+
+# Function to check if it's safe to place a queen at the given position
+def is_safe(chessboard, row, col, n):
+    # Check the column
+    for i in range(row):
+        if chessboard[i][col] == 'Q':
+            return False
+
+    # Check the upper left diagonal
+    for i, j in zip(range(row, -1, -1), range(col, -1, -1)):
+        if chessboard[i][j] == 'Q':
+            return False
+
+    # Check the upper right diagonal
+    for i, j in zip(range(row, -1, -1), range(col, n)):
+        if chessboard[i][j] == 'Q':
+            return False
+
+    return True
+
+# Recursive function to solve the N-Queens problem using forward checking
+def solve_nqueens(chessboard, row, n):
+    if row >= n:
+        return True  # All queens are placed
+
+    for col in range(n):
+        if is_safe(chessboard, row, col, n):
+            chessboard[row][col] = 'Q'  # Place a queen
+
+            if solve_nqueens(chessboard, row + 1, n):
+                return True
+
+            chessboard[row][col] = '.'  # If placing a queen doesn't lead to a solution, backtrack
+
+    return False  # No solution exists
+
+# Main function to perform N-Queens puzzle with forward checking
+def main():
+    n = 10
+    # Size of the chessboard (8x8)
+    chessboard = [['.' for _ in range(n)] for _ in range(n)]
+
+    print("N-Queens Puzzle using Forward Checking:")
+    if solve_nqueens(chessboard, 0, n):
+        print("\nSolution to the N-Queens Puzzle:")
+        print_chessboard(chessboard)
+    else:
+        print("No solution found.")
+
+if __name__ == '__main__':
+    main()
+
+O/P->
+N-Queens Puzzle using Forward Checking:
+
+Solution to the N-Queens Puzzle:
+Q . . . . . . . . .
+. . Q . . . . . . .
+. . . . . Q . . . .
+. . . . . . . Q . .
+. . . . . . . . . Q
+. . . . Q . . . . .
+. . . . . . . . Q .
+. Q . . . . . . . .
+. . . Q . . . . . .
+. . . . . . Q . . .
+**************************************************************************************
+#15 .Write a computer program to play tic-tac-toe game. (Game Theory)
+->
+#15 .Write a computer program to play tic-tac-toe game. (Game Theory)
+board = ["-", "-", "-",
+"-", "-", "-",
+"-", "-", "-"]
+# Define a function to print the game board
+def print_board():
+    print(board[0] + " | " + board[1] + " | " + board[2])
+    print(board[3] + " | " + board[4] + " | " + board[5])
+    print(board[6] + " | " + board[7] + " | " + board[8])
+# Define a function to print the game board
+def print_board():
+    print(board[0] + " | " + board[1] + " | " + board[2])
+    print(board[3] + " | " + board[4] + " | " + board[5])
+    print(board[6] + " | " + board[7] + " | " + board[8])
+# Define a function to handle a player&#39;s turn
+def take_turn(player):
+    print(player + "s turn.")
+    position = input("Choose a position from 1-9: ")
+    while position not in ["1", "2", "3", "4", "5", "6", "7", "8", "9"]:
+            position = input("Invalid input. Choose a position from 1-9: ")
+    position = int(position) - 1
+    while board[position] != "-":
+            position = int(input("Position already taken. Choose a different position: ")) - 1
+    board[position] = player
+    print_board()
+# Define a function to check if the game is over
+def check_game_over():
+    # Check for a win
+    if (board[0] == board[1] == board[2] != "-") or \
+    (board[3] == board[4] == board[5] != "-") or \
+    (board[6] == board[7] == board[8] != "-") or \
+    (board[0] == board[3] == board[6] != "-") or \
+    (board[1] == board[4] == board[7] != "-") or \
+    (board[2] == board[5] == board[8] != "-") or \
+    (board[0] == board[4] == board[8] != "-") or \
+    (board[2] == board[4] == board[6] != "-"):
+        return "win"
+    # Check for a tie
+    elif "-" not in board:
+        return "tie"
+    # Game is not over
+    else:
+        return "play"
+# Define the main game loop
+def play_game():
+    print_board()
+    current_player = "X"
+    game_over = False
+    while not game_over:
+        take_turn(current_player)
+        game_result = check_game_over()
+        if game_result == "win":
+                print(current_player + " wins!")
+                game_over = True
+        elif game_result == "tie":
+                print("Its a tie!")
+                game_over = True
+        else:
+                # Switch to the other player
+                current_player = "O" if current_player == "X" else "X"
+# Start the game
+play_game()
+
+O/P->
+
+- | - | -
+- | - | -
+- | - | -
+Xs turn.
+Choose a position from 1-9: 1
+X | - | -
+- | - | -
+- | - | -
+Os turn.
+Choose a position from 1-9: 4
+X | - | -
+O | - | -
+- | - | -
+Xs turn.
+Choose a position from 1-9: 2
+X | X | -
+O | - | -
+- | - | -
+Os turn.
+Choose a position from 1-9: 5
+X | X | -
+O | O | -
+- | - | -
+Xs turn.
+Choose a position from 1-9: 3
+X | X | X
+O | O | -
+- | - | -
+X wins!
+
+**************************************************************************************
