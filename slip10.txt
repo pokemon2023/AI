@@ -1,0 +1,45 @@
+#Write Python program to implement crypt arithmetic problem TWO+TWO=FOUR 
+from itertools import permutations
+
+def solve_cryptarithmetic():
+    for perm in permutations("0123456789", 6):
+        tw, fo = int("".join(perm[:3])), int("".join(perm[3:]))
+        if tw + tw == fo:
+            print(f"TWO = {tw}")
+            print(f"FOUR = {fo}")
+            return
+    print("No solution found.")
+
+# Call the function to solve the cryptarithmetic problem
+solve_cryptarithmetic()
+
+O.p:
+
+TWO = 64
+FOUR = 128
+
+_________________________________________________________
+
+#Q2 Write a Python program to implement Simple Chatbot.
+# Define a dictionary of responses
+responses = {
+    "hello": "Hello! How can I help you?",
+    "how are you": "I'm just a computer program, but I'm doing well. How about you?",
+    "what's your name": "I'm a chatbot, so I don't have a name. You can call me ChatGPT!",
+    "bye": "Goodbye! Have a great day.",
+    "default": "I'm sorry, I don't understand. Can you please rephrase your question?"
+}
+
+# Main chatbot loop
+while True:
+    user_input = input("You: ").lower()
+    response = responses.get(user_input, responses["default"])
+    print("ChatGPT:", response)
+    if user_input == "bye":
+        break
+
+O.p:
+
+You: hello
+ChatGPT: Hello! How can I help you?
+ 

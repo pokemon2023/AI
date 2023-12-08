@@ -1,0 +1,64 @@
+#Q.1) Write a python program to implement Lemmatization using NLTK
+from nltk.stem import WordNetLemmatizer
+from nltk.corpus import wordnet 
+
+lemmatizer = WordNetLemmatizer()
+ 
+print("love :", lemmatizer.lemmatize("loves", wordnet.VERB))
+print("loving :", lemmatizer.lemmatize("loving", wordnet.VERB))
+print("loved :", lemmatizer.lemmatize("loved", pos=wordnet.VERB))
+
+O.p:
+
+love : love
+loving : love
+loved : love
+
+______________________________________________________
+#Q.2) Write a Python program to implement Breadth First Search algorithm. Refer the following graph as an Input for the program.[Initial node=1,Goal node=8]
+from collections import deque
+
+graph = {
+    1: [2,4],
+    2: [3],
+    3: [4,5,6],
+    4: [2],
+    5: [7,8],
+    6: [8],
+    7: [8],
+    8: []
+}
+
+def bfs(start, goal):
+    queue = deque([(start, [start])])
+    visited = set()
+
+    while queue:
+        current_node, path = queue.popleft()
+
+        if current_node == goal:
+            return path
+
+        if current_node not in visited:
+            visited.add(current_node)
+            queue.extend((neighbor, path + [neighbor]) for neighbor in graph[current_node])
+
+    return None
+
+# Specify initial and goal nodes
+initial_node = 1
+goal_node = 8
+
+# Run BFS
+result_path = bfs(initial_node, goal_node)
+
+# Print the result
+if result_path:
+    print(f"Path from {initial_node} to {goal_node}: {result_path}")
+else:
+    print(f"No path found from {initial_node} to {goal_node}")
+
+O.p: 
+
+Path from 1 to 8: [1, 2, 3, 5, 8]
+ 

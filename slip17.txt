@@ -1,0 +1,107 @@
+#Q1)Python program that demonstrates the hill climbing algorithm to find the maximum of a mathematical function.
+def objective_function(x):
+    # Simple quadratic function (negated for maximum, change to x ** 2 for minimum)
+    return -(x ** 2)
+
+def hill_climbing(initial_x, step_size, max_iter):
+    current_x = initial_x
+
+    for _ in range(max_iter):
+        current_value = objective_function(current_x)
+        next_x = current_x + step_size
+        next_value = objective_function(next_x)
+
+        if next_value > current_value:
+            current_x = next_x
+
+    return current_x, objective_function(current_x)
+
+# Accept input from the user
+initial_x = float(input("Enter the initial x value: "))
+step_size = float(input("Enter the step size: "))
+max_iter = int(input("Enter the maximum number of iterations: "))
+
+# Run hill climbing algorithm
+max_x, max_value = hill_climbing(initial_x, step_size, max_iter)
+
+# Print the result
+print(f"Maximum value found at x = {max_x}, f(x) = {max_value}")
+
+O.p:
+
+Enter the initial x value: 2
+Enter the step size: 1
+Enter the maximum number of iterations: 100
+Maximum value found at x = 2.0, f(x) = -4.0
+
+_____________________________________________________________
+
+#Q.2) Write a Python program to implement A* algorithm. Refer the following graph as an Input for the program.[ Start vertex is A and Goal Vertex is G]
+from queue import PriorityQueue
+
+class Graph:
+    def __init__(self):
+        self.graph = {}
+
+    def add_edge(self, node, neighbors):
+        self.graph[node] = neighbors
+
+def a_star(graph, start, goal):
+    open_set = PriorityQueue()
+    open_set.put((0, start))
+
+    came_from = {}
+    cost_so_far = {start: 0}
+
+    while not open_set.empty():
+        _, current = open_set.get()
+
+        if current == goal:
+            path = reconstruct_path(came_from, start, goal)
+            return path
+
+        for neighbor, cost in graph.graph[current].items():
+            new_cost = cost_so_far[current] + cost
+            if neighbor not in cost_so_far or new_cost < cost_so_far[neighbor]:
+                cost_so_far[neighbor] = new_cost
+                priority = new_cost
+                open_set.put((priority, neighbor))
+                came_from[neighbor] = current
+
+    return None
+
+def reconstruct_path(came_from, start, goal):
+    current = goal
+    path = [current]
+
+    while current != start:
+        current = came_from[current]
+        path.append(current)
+
+    return path[::-1]
+
+# Define the graph
+graph = Graph()
+graph.add_edge('A', {'B': 9, 'D': 7,'C':4})
+graph.add_edge('B', {'A': 1, 'D': 5})
+graph.add_edge('C', {'A': 4, 'D': 1, 'E': 3})
+graph.add_edge('D', {'B': 5, 'C': 1, 'E': 1, 'F': 7})
+graph.add_edge('E', {'C': 3, 'D': 1, 'G': 2})
+graph.add_edge('F', {'D': 7, 'G': 1})
+graph.add_edge('G', {'E': 2, 'F': 1})
+
+# Run A* algorithm
+start_node = 'A'
+goal_node = 'G'
+path = a_star(graph, start_node, goal_node)
+
+# Print the result
+if path:
+    print(f"Shortest path from {start_node} to {goal_node}: {path}")
+else:
+    print(f"No path found from {start_node} to {goal_node}")
+
+O.p:
+
+Shortest path from A to G: ['A', 'C', 'D', 'E', 'G']
+ 

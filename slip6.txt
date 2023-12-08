@@ -1,0 +1,68 @@
+#Q.1) Write a python program to remove stop words for a given passage from a text file using NLTK?.
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+
+example_sent = """This is a sample sentence,
+				showing off the stop words filtration."""
+
+stop_words = set(stopwords.words('english'))
+
+word_tokens = word_tokenize(example_sent)
+# converts the words in word_tokens to lower case and then checks whether 
+#they are present in stop_words or not
+filtered_sentence = [w for w in word_tokens if not w.lower() in stop_words]
+#with no lower case conversion
+filtered_sentence = []
+
+for w in word_tokens:
+	if w not in stop_words:
+		filtered_sentence.append(w)
+
+print(word_tokens)
+print(filtered_sentence)
+
+O.p:
+
+['This', 'is', 'a', 'sample', 'sentence', ',', 'showing', 'off', 'the', 'stop', 'words', 'filtration', '.']
+['This', 'sample', 'sentence', ',', 'showing', 'stop', 'words', 'filtration', '.']
+__________________________________________________
+
+#Q.2) Write a Python program to implement Breadth First Search algorithm. Refer the following graph as an Input for the program.[Initial node=1,Goal node=8].
+from collections import deque
+
+def bfs(graph, start, goal):
+    visited = set()
+    queue = deque([(start, [start])])
+
+    while queue:
+        node, path = queue.popleft()
+
+        if node == goal:
+            return path
+
+        if node not in visited:
+            visited.add(node)
+            queue.extend((neighbor, path + [neighbor]) for neighbor in graph.get(node, []))
+
+    return None
+
+# Given graph represented as an adjacency list
+graph = {1: [2, 3,4], 2: [4, 5], 3: [1, 4], 4: [2,7], 5: [6,7], 6: [7,5], 7: [6,5,4]}
+
+# Specify initial and goal nodes
+initial_node = 1
+goal_node = 7
+
+# Run BFS and print the result
+path_result = bfs(graph, initial_node, goal_node)
+
+if path_result:
+    print(f"Path from {initial_node} to {goal_node}: {path_result}")
+else:
+    print(f"No path found from {initial_node} to {goal_node}")
+
+O.p: 
+
+Path from 1 to 7: [1, 4, 7]
+ 
+ 

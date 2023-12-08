@@ -1,0 +1,89 @@
+#Q.1)Write a program to implement Hangman game using python. 
+#Description:
+#Hangman is a classic word-guessing game. The user should guess the word correctly by
+#entering alphabets of the user choice. The Program will get input as single alphabet from the
+#user and it will matchmaking with the alphabets in the original
+import random
+
+def choose_word():
+    return random.choice(["hangman", "python", "programming", "developer", "computer"])
+
+def display_word(word, guessed_letters):
+    return ''.join(letter if letter in guessed_letters else '_' for letter in word)
+
+def hangman():
+    word_to_guess = choose_word()
+    guessed_letters = set()
+    attempts = 6
+
+    print("Welcome to Hangman!")
+    print(display_word(word_to_guess, guessed_letters))
+
+    while "_" in display_word(word_to_guess, guessed_letters) and attempts > 0:
+        guess = input("Guess a letter: ").lower()
+
+        if len(guess) != 1 or not guess.isalpha():
+            print("Please enter a single alphabet.")
+            continue
+
+        guessed_letters.add(guess)
+        attempts -= 1 if guess not in word_to_guess else 0
+
+        print(f"Incorrect! Attempts left: {attempts}" if guess not in word_to_guess else "Correct!")
+        print(display_word(word_to_guess, guessed_letters))
+
+    print(f"Congratulations! You guessed the word." if "_" not in display_word(word_to_guess, guessed_letters)
+          else f"Sorry, you ran out of attempts. The word was '{word_to_guess}'.")
+
+if __name__ == "__main__":
+    hangman()
+O.p: 
+
+Welcome to Hangman!
+___________________________________________________
+#Q2.Write a Python program to implement Breadth First Search algorithm. Refer the following graph as an Input for the program.[Initial node=1,Goal node=8]
+from collections import deque
+
+graph = {
+    1: [2, 3],
+    2: [4, 5],
+    3: [6, 7],
+    4: [8],
+    5: [8],
+    6: [8],
+    7: [8],
+    8: []
+}
+
+def bfs(start, goal):
+    queue = deque([(start, [start])])
+    visited = set()
+
+    while queue:
+        current_node, path = queue.popleft()
+
+        if current_node == goal:
+            return path
+
+        if current_node not in visited:
+            visited.add(current_node)
+            queue.extend((neighbor, path + [neighbor]) for neighbor in graph[current_node])
+
+    return None
+
+# Specify initial and goal nodes
+initial_node = 1
+goal_node = 8
+
+# Run BFS
+result_path = bfs(initial_node, goal_node)
+
+# Print the result
+if result_path:
+    print(f"Path from {initial_node} to {goal_node}: {result_path}")
+else:
+    print(f"No path found from {initial_node} to {goal_node}")
+O/p: 
+
+Path from 1 to 8: [1, 2, 4, 8]
+ 

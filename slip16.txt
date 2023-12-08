@@ -1,0 +1,146 @@
+# Q1)Write a Program to Implement Tower of Hanoi using Python
+def tower_of_hanoi(n, source, target, auxiliary):
+    if n == 1:
+        print(f"Move disk 1 from {source} to {target}")
+        return
+    tower_of_hanoi(n-1, source, auxiliary, target)
+    print(f"Move disk {n} from {source} to {target}")
+    tower_of_hanoi(n-1, auxiliary, target, source)
+
+# Function to get user input and solve Tower of Hanoi
+def main():
+    num_disks = int(input("Enter the number of disks: "))
+    tower_of_hanoi(num_disks, 'A', 'C', 'B')
+
+if __name__ == "__main__":
+    main()
+
+O.p:
+
+Enter the number of disks: 3
+Move disk 1 from A to C
+Move disk 2 from A to B
+Move disk 1 from C to B
+Move disk 3 from A to C
+Move disk 1 from B to A
+Move disk 2 from B to C
+Move disk 1 from A to C
+
+_________________________________________________
+
+
+# Q2)Write a computer program to play tic-tac-toe game.
+# Set up the game board as a list
+board = ["-", "-", "-",
+"-", "-", "-",
+"-", "-", "-"]
+
+# Define a function to print the game board
+def print_board():
+    print(board[0] + " | " + board[1] + " | " + board[2])
+    print(board[3] + " | " + board[4] + " | " + board[5])
+    print(board[6] + " | " + board[7] + " | " + board[8])
+
+# Define a function to handle a player&#39;s turn
+def take_turn(player):
+    print(player + "s turn.")
+    position = input("Choose a position from 1-9: ")
+    while position not in ["1", "2", "3", "4", "5", "6", "7", "8", "9"]:
+            position = input("Invalid input. Choose a position from 1-9: ")
+    position = int(position) - 1
+    while board[position] != "-":
+            position = int(input("Position already taken. Choose a different position: ")) - 1
+    board[position] = player
+    print_board()
+
+# Define a function to check if the game is over
+def check_game_over():
+    # Check for a win
+    if (board[0] == board[1] == board[2] != "-") or \
+        (board[3] == board[4] == board[5] != "-") or \
+        (board[6] == board[7] == board[8] != "-") or \
+        (board[0] == board[3] == board[6] != "-") or \
+        (board[1] == board[4] == board[7] != "-") or \
+        (board[2] == board[5] == board[8] != "-") or \
+        (board[0] == board[4] == board[8] != "-") or \
+        (board[2] == board[4] == board[6] != "-"):
+                return "win"
+    # Check for a tie
+    elif "-" not in board:
+        return "tie"
+    # Game is not over
+    else:
+         return "play"
+
+# Define the main game loop
+def play_game():
+    print_board()
+    current_player = "X"
+    game_over = False
+    while not game_over:
+        take_turn(current_player)
+        game_result = check_game_over()
+        if game_result == "win":
+            print(current_player + " wins!")
+            game_over = True
+        elif game_result == "tie":
+            print("It is a tie!")
+            game_over = True
+        else:
+            # Switch to the other player
+             current_player = "O" if current_player == "X" else "X"
+# Start the game
+play_game()
+
+O.p:
+
+- | - | -
+- | - | -
+- | - | -
+Xs turn.
+Choose a position from 1-9: 2
+- | X | -
+- | - | -
+- | - | -
+Os turn.
+Choose a position from 1-9: 1
+O | X | -
+- | - | -
+- | - | -
+Xs turn.
+Choose a position from 1-9: 3
+O | X | X
+- | - | -
+- | - | -
+Os turn.
+Choose a position from 1-9: 5
+O | X | X
+- | O | -
+- | - | -
+Xs turn.
+Choose a position from 1-9: 4
+O | X | X
+X | O | -
+- | - | -
+Os turn.
+Choose a position from 1-9: 6
+O | X | X
+X | O | O
+- | - | -
+Xs turn.
+Choose a position from 1-9: 8
+O | X | X
+X | O | O
+- | X | -
+Os turn.
+Choose a position from 1-9: 7
+O | X | X
+X | O | O
+O | X | -
+Xs turn.
+Choose a position from 1-9: 9
+O | X | X
+X | O | O
+O | X | X
+It is a tie!
+ 

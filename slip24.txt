@@ -1,0 +1,35 @@
+""'Q.1) Write a python program to sort the sentence in alphabetical order?
+
+sentence = input("enter a sentence")
+sorted_sentence = ' '.join(sorted(sentence.split()))
+
+print("Sorted Sentence:", sorted_sentence)
+
+O.p:
+
+enter a sentence hi kyho go to la abv
+Sorted Sentence: abv go hi kyho la to
+
+__________________________________________________________________________
+
+""'Q.2) Write a Python program for the following Cryptorithmetic problems  (CROSS+ROADS = DANGER)
+
+from itertools import permutations
+
+def solve_cryptarithmetic(puzzle):
+    chars = set("".join(puzzle))
+
+    for perm in permutations('0123456789', len(chars)):
+        assignment = dict(zip(chars, perm))
+
+        if all(assignment[word[0]] != '0' for word in puzzle) and \
+           sum(int("".join(map(assignment.get, word))) for word in puzzle[:-1]) == int("".join(map(assignment.get, puzzle[-1]))):
+            print(f"Solution found: {assignment}")
+
+# Example puzzle: CROSS + ROADS = DANGER
+solve_cryptarithmetic(["CROSS", "ROADS", "DANGER"])
+
+O.p:
+
+Solution found: {'C': '9', 'N': '8', 'G': '7', 'O': '2', 'R': '6', 'D': '1', 'A': '5', 'E': '4', 'S': '3'}
+ 

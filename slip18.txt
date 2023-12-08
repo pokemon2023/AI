@@ -1,0 +1,148 @@
+'''Q.1).Write a python program to remove stop words for a given passage from a text file using NLTK?.'''
+import nltk
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+
+nltk.download('stopwords')
+nltk.download('punkt')
+
+def remove_stop_words(input_text):
+    stop_words = set(stopwords.words('english'))
+    word_tokens = word_tokenize(input_text)
+    filtered_words = [word for word in word_tokens if word.lower() not in stop_words]
+    return ' '.join(filtered_words)
+
+def main():
+    file_path = 'your_text_file.txt'  # Replace with the path to your text file
+
+    try:
+        with open(file_path, 'r') as file:
+            passage = file.read()
+    except FileNotFoundError:
+        print(f"Error: File '{file_path}' not found.")
+        return
+
+    processed_passage = remove_stop_words(passage)
+
+    print("Original Passage:")
+    print(passage)
+
+    print("\nPassage after removing stop words:")
+    print(processed_passage)
+
+if __name__ == "__main__":
+    main()
+
+O.p:
+
+Error: File 'your_text_file.txt' not found.
+[nltk_data] Downloading package stopwords to
+[nltk_data]     C:\Users\sumit\AppData\Roaming\nltk_data...
+[nltk_data]   Package stopwords is already up-to-date!
+[nltk_data] Downloading package punkt to
+[nltk_data]     C:\Users\sumit\AppData\Roaming\nltk_data...
+[nltk_data]   Package punkt is already up-to-date!
+
+_________________________________________________________________
+
+""""Q.2) Implement a system that performs arrangement of some set of objects in a room. Assume that you have only 5 rectangular, 4 square-shaped objects. Use A* approach for the placement of
+the objects in room for efficient space utilisation. Assume suitable heuristic, and dimensions of
+objects and rooms. (Informed Search)"""
+import heapq
+import math
+
+class RoomPlanner:
+    def __init__(self, room_width, room_height, objects):
+        self.room_width = room_width
+        self.room_height = room_height
+        self.objects = objects
+        self.initial_state = []  # Initial state: No objects placed
+        self.goal_state = [obj['id'] for obj in objects]  # Goal state: All objects placed
+        self.heap = []  # Priority queue for A* search
+
+    def heuristic(self, state):
+        # Example heuristic: Minimize wasted space by maximizing aspect ratio
+        total_area = self.room_width * self.room_height
+        placed_objects_area = sum([obj['width'] * obj['height'] for obj in self.objects if obj['id'] in state])
+        wasted_area = total_area - placed_objects_area
+
+        # Penalize low aspect ratios to encourage efficient space utilization
+        aspect_ratio_penalty = sum([(obj['width'] / obj['height']) for obj in self.objects if obj['id'] in state])
+
+        return wasted_area + aspect_ratio_penalty
+
+    def is_goal_state(self, state):
+        return state == self.goal_state
+
+    def get_actions(self, state):
+        actions = []
+        for obj_id in [obj['id'] for obj in self.objects if obj['id'] not in state]:
+            for rotate in [False, True]:  # Consider both orientations for rectangular objects
+                new_state = state + [obj_id]
+                actions.append((new_state, self.cost_function(new_state)))
+
+        return actions
+
+    def cost_function(self, state):
+        # Example cost function: Euclidean distance between the centers of objects
+        positions = [self.get_object_position(obj_id, state) for obj_id in state]
+        return sum([math.sqrt((x1 - x2)**2 + (y1 - y2)**2) for (x1, y1), (x2, y2) in zip(positions, positions[1:])])
+
+    def get_object_position(self, obj_id, state):
+        # Calculate the position of the object's center in the room
+        x = sum([obj['width'] / 2 for obj in self.objects if obj['id'] in state and obj['id'] != obj_id])
+        y = sum([obj['height'] / 2 for obj in self.objects if obj['id'] in state and obj['id'] != obj_id])
+        return x, y
+
+    def a_star_search(self):
+        heapq.heappush(self.heap, (self.heuristic(self.initial_state), self.initial_state, []))
+
+        while self.heap:
+            _, current_state, path = heapq.heappop(self.heap)
+
+            if self.is_goal_state(current_state):
+                return path
+
+            for next_state, cost in self.get_actions(current_state):
+                new_path = path + [next_state]
+                heapq.heappush(self.heap, (self.heuristic(next_state) + cost, next_state, new_path))
+
+def get_user_input():
+    room_width = int(input("Enter the width of the room: "))
+    room_height = int(input("Enter the height of the room: "))
+
+    num_objects = int(input("Enter the number of objects: "))
+    objects = []
+
+    for i in range(1, num_objects + 1):
+        width = int(input(f"Enter the width of object {i}: "))
+        height = int(input(f"Enter the height of object {i}: "))
+        objects.append({'id': i, 'width': width, 'height': height})
+
+    return room_width, room_height, objects
+
+if __name__ == "__main__":
+    room_width, room_height, objects = get_user_input()
+    planner = RoomPlanner(room_width, room_height, objects)
+    result_path = planner.a_star_search()
+    print("Optimal arrangement path:", result_path)
+
+O.p:
+
+Enter the width of the room: 5
+Enter the height of the room: 10
+Enter the number of objects: 6
+Enter the width of object 1: 3
+Enter the height of object 1: 2
+Enter the width of object 2: 5
+Enter the height of object 2: 6
+Enter the width of object 3: 2
+Enter the height of object 3: 3
+Enter the width of object 4: 2
+Enter the height of object 4: 3
+Enter the width of object 5: 2
+Enter the height of object 5: 3
+Enter the width of object 6: 2
+Enter the height of object 6: 3
+Optimal arrangement path: [[1], [1, 2], [1, 2, 3], [1, 2, 3, 4], [1, 2, 3, 4, 5], [1, 2, 3, 4, 5, 6]]
+ 

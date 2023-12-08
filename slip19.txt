@@ -1,0 +1,150 @@
+'''Q.1) Write a program to implement Hangman game using python.
+Description:
+Hangman is a classic word-guessing game. The user should guess the word correctly by
+entering alphabets of the user choice. The Program will get input as single alphabet from the
+user and it will matchmaking with the alphabets in the original word.
+import random'''
+
+def choose_word():
+    words = ["hangman", "python", "programming", "computer", "developer", "learning"]
+    return random.choice(words)
+
+def display_word(word, guessed_letters):
+    return ''.join(letter if letter in guessed_letters else '_' for letter in word)
+
+def hangman():
+    word_to_guess = choose_word()
+    guessed_letters = set()
+    attempts = 6
+
+    print("Welcome to Hangman!")
+
+    while attempts > 0:
+        current_display = display_word(word_to_guess, guessed_letters)
+        print(current_display)
+
+        if '_' not in current_display:
+            print("Congratulations! You guessed the word correctly. You win!")
+            break
+
+        guess = input(f"Attempts left: {attempts}. Enter a letter: ").lower()
+
+        if len(guess) != 1 or not guess.isalpha():
+            print("Please enter a valid single alphabet.")
+            continue
+
+        if guess in guessed_letters:
+            print("You've already guessed that letter. Try again.")
+            continue
+
+        guessed_letters.add(guess)
+
+        if guess not in word_to_guess:
+            attempts -= 1
+            print(f"Wrong guess!")
+
+    else:
+        print(f"Sorry, you're out of attempts. The word was '{word_to_guess}'. Game over!")
+
+if __name__ == "__main__":
+    hangman()
+
+O.p:
+
+Welcome to Hangman!
+________
+Attempts left: 6. Enter a letter: g
+_______g
+Attempts left: 6. Enter a letter: i
+_____i_g
+Attempts left: 6. Enter a letter: e
+_e___i_g
+Attempts left: 6. Enter a letter: n
+_e__ning
+Attempts left: 6. Enter a letter: p
+Wrong guess!
+_e__ning
+Attempts left: 5. Enter a letter: d
+Wrong guess!
+_e__ning
+Attempts left: 4. Enter a letter: c
+Wrong guess!
+_e__ning
+Attempts left: 3. Enter a letter: l
+le__ning
+Attempts left: 3. Enter a letter: r
+le_rning
+Attempts left: 3. Enter a letter: a
+learning
+Congratulations! You guessed the word correctly. You win!
+
+____________________________________________________________________
+
+'''Q2)Write a Python program to implement A* algorithm. Refer the following graph as an Input for
+the program.'''
+
+import heapq
+
+class Graph:
+    def __init__(self):
+        self.edges = {}
+        self.weights = {}
+
+    def add_edge(self, from_node, to_node, weight):
+        if from_node not in self.edges:
+            self.edges[from_node] = []
+        self.edges[from_node].append(to_node)
+        self.weights[(from_node, to_node)] = weight
+
+def astar(graph, start, goal, heuristic):
+    heap = [(0, start)]
+    visited = set()
+
+    while heap:
+        (cost, current) = heapq.heappop(heap)
+
+        if current in visited:
+            continue
+
+        visited.add(current)
+
+        if current == goal:
+            return cost
+
+        for next_node in graph.edges.get(current, []):
+            new_cost = cost + graph.weights[(current, next_node)]
+            heapq.heappush(heap, (new_cost + heuristic(next_node, goal), next_node))
+
+    return float('inf')
+
+def heuristic(node, goal):
+    # Replace this with your specific heuristic function
+    return 0
+
+if __name__ == "__main__":
+    # Define the graph
+    graph = Graph()
+    graph.add_edge('A', 'B', 2)
+    graph.add_edge('B', 'C', 3)
+    graph.add_edge('B', 'F', 9)
+    graph.add_edge('B', 'C', 1)
+    graph.add_edge('A', 'E', 3)
+    graph.add_edge('F', 'D', 1)
+    graph.add_edge('D', 'E', 3)
+
+    # Specify start and goal nodes
+    start_node = 'A'
+    goal_node = 'F'
+
+    # Run A* algorithm
+    result = astar(graph, start_node, goal_node, heuristic)
+
+    if result == float('inf'):
+        print(f"There is no path from {start_node} to {goal_node}.")
+    else:
+        print(f"The cost of the shortest path from {start_node} to {goal_node} is {result}.")
+
+o.p:
+
+The cost of the shortest path from A to F is 11.
+ 

@@ -1,0 +1,48 @@
+""'Q.1) Write a Program to Implement Tower of Hanoi using Python.
+
+def tower_of_hanoi(n, source, target, auxiliary):
+    if n > 0:
+        tower_of_hanoi(n - 1, source, auxiliary, target)
+        
+        print(f"Move disk {n} from {source} to {target}")
+        
+        tower_of_hanoi(n - 1, auxiliary, target, source)
+        
+num_disks = int(input("Enter the number of disks: "))
+tower_of_hanoi(num_disks, 'A', 'C', 'B')
+
+O.p:
+
+Enter the number of disks: 3
+Move disk 1 from A to C
+Move disk 2 from A to B
+Move disk 1 from C to B
+Move disk 3 from A to C
+Move disk 1 from B to A
+Move disk 2 from B to C
+Move disk 1 from A to C
+
+__________________________________________
+
+
+""'Q.2) Write a Python program for the following Cryptarithmetic problems. (SEND + MORE = MONEY)""""
+
+from itertools import permutations
+
+def solve_cryptarithmetic(puzzle):
+    chars = set("".join(puzzle))
+
+    for perm in permutations('0123456789', len(chars)):
+        assignment = dict(zip(chars, perm))
+
+        if all(assignment[word[0]] != '0' for word in puzzle) and \
+           sum(int("".join(map(assignment.get, word))) for word in puzzle[:-1]) == int("".join(map(assignment.get, puzzle[-1]))):
+            print(f"Solution found: {assignment}")
+
+# Example puzzle: SEND + MORE = MONEY
+solve_cryptarithmetic(["SEND", "MORE", "MONEY"])
+
+O.p:
+
+Solution found: {'D': '7', 'Y': '2', 'E': '5', 'O': '0', 'R': '8', 'N': '6', 'S': '9', 'M': '1'}
+ 

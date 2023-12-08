@@ -1,0 +1,39 @@
+""'Q.1)Write a python program to remove punctuations from the given string?
+
+import string
+
+remove_punctuation = lambda s: s.translate(str.maketrans("", "", string.punctuation))
+
+input_string = input("Enter a string with punctuation")
+output_string = remove_punctuation(input_string)
+
+print("String without punctuation:", output_string)
+
+O.p:
+
+Enter a string with punctuationhi, jon;aga: aokj''AHA/AGHAJ ?HANA ! HXH :
+String without punctuation: hi jonaga aokjAHAAGHAJ HANA  HXH 
+
+_________________________________________________________
+
+""'Q.2)Write a Python program for the following Cryptarithmetic problems. (GO + TO = OUT)
+
+from itertools import permutations
+
+def solve_cryptarithmetic(puzzle):
+    chars = set("".join(puzzle))
+
+    for perm in permutations('0123456789', len(chars)):
+        assignment = dict(zip(chars, perm))
+
+        if all(assignment[word[0]] != '0' for word in puzzle) and \
+           sum(int("".join(map(assignment.get, word))) for word in puzzle[:-1]) == int("".join(map(assignment.get, puzzle[-1]))):
+            print(f"Solution found: {assignment}")
+            
+
+# Example puzzle: GO + TO = OUT
+solve_cryptarithmetic(["GO", "TO", "OUT"])
+
+O.p:
+
+Solution found: {'T': '2', 'G': '8', 'O': '1', 'U': '0'}

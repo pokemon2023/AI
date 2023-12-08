@@ -1,0 +1,76 @@
+"""Q1.Write a python program using mean end analysis algorithmproblem of transforming a string of
+lowercase letters into another string."""
+def mean_end_analysis(start, goal):
+    current_state = start
+    steps = 0
+
+    while current_state != goal:
+        # Find the first differing character between the current state and the goal
+        diff_index = next((i for i, (a, b) in enumerate(zip(current_state, goal)) if a != b), None)
+
+        if diff_index is not None:
+            # Replace the differing character in the current state with the corresponding character in the goal
+            current_state = current_state[:diff_index] + goal[diff_index] + current_state[diff_index + 1:]
+        else:
+            # If no differing character is found, break the loop
+            break
+
+        steps += 1
+        print(f"Step {steps}: {current_state}")
+
+    if current_state == goal:
+        print(f"Transformation successful in {steps} steps.")
+    else:
+        print("Transformation failed.")
+
+# Example usage:
+start_string = "abcd"
+goal_string = "efgh"
+mean_end_analysis(start_string, goal_string)
+
+O:p:
+
+Step 1: ebcd
+Step 2: efcd
+Step 3: efgd
+Step 4: efgh
+Transformation successful in 4 steps.
+
+_________________________________________________________
+
+"""Q2.Write a Python program to solve water jug problem. Two jugs with capacity 4 gallon and 3
+gallon are given with unlimited water supply respectively. The target is to achieve 2 gallon of
+water in second jug."""
+def water_jug(jug1_capacity,jug2_capacity,target_amount):
+    jug1 = 0
+    jug2 = 0
+    
+    while (jug1 != target_amount and jug2 != target_amount):
+        
+        pour_amt = min(jug2,jug1_cap-jug1)
+        jug1 += pour_amt
+        jug2 -= pour_amt
+        
+        if(jug1 == jug1_cap):
+            jug1 =0
+        
+        if(jug2 == 0):
+            jug2 = jug2_cap
+            
+        print(f'jug1: {jug1}/{jug1_cap},jug2: {jug2}/{jug2_cap}')
+    
+jug1_cap= int(input('Enter jug1 capacity'))
+jug2_cap= int(input('Enter jug2 capacity'))
+target_amount= int(input('Enter target amount'))
+
+water_jug(jug1_cap,jug2_cap,target_amount)
+
+O.p:
+
+Enter jug1 capacity4
+Enter jug2 capacity3
+Enter target amount2
+jug1: 0/4,jug2: 3/3
+jug1: 3/4,jug2: 3/3
+jug1: 0/4,jug2: 2/3
+ 
